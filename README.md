@@ -111,3 +111,58 @@ python main.py
 - **Player Movement**: Move around the world using the WASD keys and mouse for looking around.
 - **Block Placement and Removal**: Place and remove blocks using the left and right mouse buttons.
 - **Procedurally Generated Terrain**: Explore a flat or hilly terrain generated procedurally.
+
+## Testing Structure and Test Cases
+
+### Testing Structure
+
+The repository includes a dedicated testing structure for unit and integration tests. The tests are organized into different categories to ensure comprehensive coverage of all critical game features and components.
+
+### Test Cases
+
+1. **Unit Tests**
+   - Test individual components like voxels, player controls, and terrain generation.
+   - Verify that all parameters produce the expected results, such as block placement, removal, and chunk handling.
+   - Ensure that error handling works as intended for invalid inputs.
+
+2. **Integration Tests**
+   - Check the interaction between components like player actions, crafting systems, and entity behavior.
+   - Test game mechanics, such as crafting recipes, block durability, and resource collection.
+   - Ensure transitions between game states, such as loading new chunks or saving progress, function seamlessly.
+
+3. **Performance Tests**
+   - Assess chunk loading and rendering performance in different scenarios, such as dense terrain or high-speed movement.
+   - Test the impact of dynamic lighting, weather effects, and particle systems on frame rates.
+   - Identify potential bottlenecks in terrain generation or physics simulations.
+
+4. **Gameplay Tests**
+   - Playtest the game to ensure smooth controls, proper collision detection, and expected gameplay behavior.
+   - Verify that AI entities respond appropriately to player actions and environmental changes.
+   - Ensure all environmental interactions, such as fire spreading or water flowing, behave realistically.
+
+5. **Stress Tests**
+   - Simulate edge cases, such as extreme player movement speeds, large-scale world exploration, or high-density block placement.
+   - Test multiplayer performance by connecting multiple players and observing synchronization and latency.
+
+6. **Bug Tracking**
+   - Document any bugs or inconsistencies discovered during testing.
+   - Prioritize fixes based on their impact on gameplay and stability.
+   - Retest resolved issues to ensure they are fully addressed.
+
+7. **Final Review**
+   - Perform a comprehensive review of the game to confirm all features are functional and optimized.
+   - Ensure the game meets performance benchmarks and runs smoothly on intended platforms.
+
+## Running the Tests
+
+To run the tests, execute the following command:
+
+```bash
+python -m unittest discover tests
+```
+
+This command will discover and run all the test cases in the `tests` directory.
+
+## Importance of Testing
+
+Testing is a crucial part of the development process to ensure that all components of the game function correctly and meet performance expectations. By thoroughly testing the game, we can identify and fix issues early, leading to a more stable and enjoyable gaming experience.
