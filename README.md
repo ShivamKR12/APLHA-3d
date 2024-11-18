@@ -97,3 +97,17 @@ app.run()
 ```
 
 This code sets up a basic voxel world where you can place and remove blocks using the mouse.
+
+## Running the Game
+
+To run the game, execute the `main.py` file:
+
+```bash
+python main.py
+```
+
+## Game Features
+
+- **Player Movement**: Move around the world using the WASD keys and mouse for looking around.
+- **Block Placement and Removal**: Place and remove blocks using the left and right mouse buttons.
+- **Procedurally Generated Terrain**: Explore a flat or hilly terrain generated procedurally.
