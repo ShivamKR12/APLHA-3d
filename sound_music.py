@@ -1,4 +1,4 @@
-from ursina import Ursina, Audio, Entity, color, Vec3
+from ursina import Ursina, Audio, Entity, color, Vec3, time
 from ursina.prefabs.first_person_controller import FirstPersonController
 
 class Voxel(Entity):

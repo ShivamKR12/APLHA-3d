@@ -1,57 +1,49 @@
-from ursina import Ursina, Entity, Vec3, time, color
+from ursina import Ursina, Entity, Vec3, time
 from ursina.prefabs.first_person_controller import FirstPersonController
-import pybullet as p
 
 class Voxel(Entity):
-    def __init__(self, position=(0,0,0)):
+    def __init__(self, position=(0,0,0), color=color.white):
         super().__init__(
             model='cube',
-            color=color.white,
+            color=color,
             texture='white_cube',
             position=position
         )
-        self.collider = p.createCollisionShape(p.GEOM_BOX, halfExtents=[0.5, 0.5, 0.5])
-        self.body = p.createMultiBody(baseMass=1, baseCollisionShapeIndex=self.collider, basePosition=position)
-
-    def input(self, key):
-        if self.hovered:
-            if key == 'left mouse down':
-                Voxel(position=self.position + mouse.normal)
-            if key == 'right mouse down':
-                p.removeBody(self.body)
-                destroy(self)
+        self.velocity = Vec3(0, 0, 0)
 
     def update(self):
-        pos, _ = p.getBasePositionAndOrientation(self.body)
-        self.position = Vec3(*pos)
+        self.velocity.y -= 9.81 * time.dt  # Apply gravity
+        self.position += self.velocity * time.dt
 
-class Player(Entity):
+        # Collision detection with ground
+        if self.position.y < 0:
+            self.position.y = 0
+            self.velocity.y = 0
+
+class PhysicsWorld(Entity):
     def __init__(self):
         super().__init__()
-        self.controller = FirstPersonController()
-        self.collider = p.createCollisionShape(p.GEOM_BOX, halfExtents=[0.5, 1, 0.5])
-        self.body = p.createMultiBody(baseMass=1, baseCollisionShapeIndex=self.collider, basePosition=self.controller.position)
+        self.voxels = []
+
+    def add_voxel(self, voxel):
+        self.voxels.append(voxel)
 
     def update(self):
-        pos, _ = p.getBasePositionAndOrientation(self.body)
-        self.controller.position = Vec3(*pos)
+        for voxel in self.voxels:
+            voxel.update()
 
 app = Ursina()
 
-p.connect(p.DIRECT)
-p.setGravity(0, -9.81, 0)
+physics_world = PhysicsWorld()
 
 for z in range(8):
     for x in range(8):
-        Voxel(position=(x,0,z))
+        voxel = Voxel(position=(x, 0, z))
+        physics_world.add_voxel(voxel)
 
-player = Player()
+player = FirstPersonController()
 
 def update():
-    p.stepSimulation()
-    player.update()
-    for entity in scene.entities:
-        if isinstance(entity, Voxel):
-            entity.update()
+    physics_world.update()
 
 app.run()

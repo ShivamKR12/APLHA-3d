@@ -41,6 +41,24 @@ class Cave(Entity):
             position=position
         )
 
+class Biome(Entity):
+    def __init__(self, position=(0,0,0), biome_type='forest'):
+        super().__init__(
+            model='cube',
+            color=color.green if biome_type == 'forest' else color.yellow if biome_type == 'desert' else color.gray,
+            texture='white_cube',
+            position=position
+        )
+
+class TerrainVariation(Entity):
+    def __init__(self, position=(0,0,0), variation_type='cave'):
+        super().__init__(
+            model='cube',
+            color=color.black if variation_type == 'cave' else color.brown,
+            texture='white_cube',
+            position=position
+        )
+
 app = Ursina()
 
 terrain = Terrain()
@@ -54,5 +72,15 @@ for z in range(20):
 for z in range(5, 15):
     for x in range(5, 15):
         Cave(position=(x, 2, z))
+
+# Add biomes
+for z in range(20):
+    for x in range(20):
+        Biome(position=(x, 0, z), biome_type='forest' if (x + z) % 3 == 0 else 'desert' if (x + z) % 3 == 1 else 'mountains')
+
+# Add terrain variations
+for z in range(5, 15):
+    for x in range(5, 15):
+        TerrainVariation(position=(x, 3, z), variation_type='cave' if (x + z) % 2 == 0 else 'overhang')
 
 app.run()
