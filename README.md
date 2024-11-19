@@ -30,11 +30,10 @@ APLHA-3D requires Python 3.6 or higher. If you don’t have Python installed, do
    cd APLHA-3d
 
 3. **Install dependencies**
-   APLHA-3D uses several Python libraries, including pygame for rendering and input handling.
+   APLHA-3D uses several Python libraries, including Ursina for rendering and input handling.
    Install the required dependencies using pip:
    ```bash
    pip install -r requirements.txt
-   pip install ursina
 
 4. **Run the game**
    Once all dependencies are installed, you can launch the game by running:
@@ -82,11 +81,11 @@ This project is licensed under the MIT License. See the LICENSE file for details
 ## Acknowledgements
 **APLHA-3D** uses various open-source libraries and tools:
 
-**Pygame** for handling 2D and 3D rendering and input.
+**Ursina** for handling 3D rendering and input.
 
 **NumPy** for efficient array and matrix operations.
 
-**PyOpenGL** for OpenGL bindings to render 3D graphics.
+**Perlin-noise** for procedural terrain generation.
 
 Special thanks to the open-source community for their contributions!
 
