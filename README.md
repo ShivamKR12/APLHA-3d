@@ -34,6 +34,7 @@ APLHA-3D requires Python 3.6 or higher. If you don’t have Python installed, do
    Install the required dependencies using pip:
    ```bash
    pip install -r requirements.txt
+   pip install ursina
 
 4. **Run the game**
    Once all dependencies are installed, you can launch the game by running:
@@ -52,6 +53,8 @@ APLHA-3D requires Python 3.6 or higher. If you don’t have Python installed, do
 **Right Mouse Button: Look around.**
 
 **Left Mouse Button: Place blocks.**
+
+**Right Mouse Button: Remove blocks.**
 
 **Shift: Run.**
 

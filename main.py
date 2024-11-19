@@ -1,4 +1,4 @@
-from ursina import Ursina, Entity, color, mouse, Vec3
+from ursina import Ursina, Entity, color, mouse, Vec3, destroy
 from ursina.prefabs.first_person_controller import FirstPersonController
 
 class Voxel(Entity):
@@ -19,9 +19,11 @@ class Voxel(Entity):
 
 app = Ursina()
 
+voxel_parent = Entity()
+
 for z in range(8):
     for x in range(8):
-        Voxel(position=(x,0,z))
+        Voxel(position=(x,0,z), parent=voxel_parent)
 
 player = FirstPersonController()
 app.run()
