@@ -236,3 +236,29 @@ To set up a VNC server in a separate directory outside the main game directory, 
    ```
 
 By following these steps, you will have a VNC server set up in a separate directory outside the main game directory, running independently without causing any major connections or errors in the main files.
+
+## VNC Viewer Setup and Connection Instructions
+
+To connect to the VNC server using a VNC viewer, follow these steps:
+
+1. **Install a VNC viewer on your local machine:**
+
+   Popular options include RealVNC Viewer, TightVNC Viewer, and TigerVNC Viewer.
+
+2. **Open the VNC viewer application on your local machine.**
+
+3. **Enter the VNC server address:**
+
+   Use the format `your_server_ip:1` where `your_server_ip` is the IP address of the server running the VNC server.
+
+4. **Click the "Connect" button to initiate the connection.**
+
+5. **Enter the VNC server password:**
+
+   When prompted, enter the VNC server password that you set up during the VNC server configuration.
+
+6. **View the remote desktop:**
+
+   Once connected, you should see the remote desktop of the VNC server.
+
+For more detailed instructions on setting up the VNC server, refer to the `vnc_setup/README.md` file in the `vnc_setup` directory.
