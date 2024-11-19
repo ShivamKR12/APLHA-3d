@@ -1,106 +1,238 @@
-# APLHA-3D: A 3D Voxel Game in Python
+# Basic 3D Voxel Game in Python
 
-APLHA-3D is an experimental voxel-based 3D game developed using Python. This project leverages the power of Python for creating 3D games, providing a foundation for complex gameplay mechanics such as dynamic world generation, block interaction, and a user-controlled environment.
+## Project Setup
 
-This game is a great starting point for anyone interested in learning how to build 3D games or working with voxel engines. APLHA-3D showcases basic 3D graphics rendering, physics, and player control, offering an accessible yet powerful framework for further development.
-
-## Key Features
-- **Voxel Terrain Generation**: The world is built from individual cubes (voxels), allowing for large, procedurally generated environments.
-- **Block Manipulation**: Players can place and remove blocks in the environment, modifying the world dynamically.
-- **Dynamic Lighting**: Simulated lighting effects to enhance visual realism.
-- **Simple Exploration**: The game supports basic player controls for moving through the voxel world.
-- **Camera Control**: The player can freely navigate the world using camera movement.
-
-## Installation
-
-Follow these steps to install and run APLHA-3D on your local machine.
-
-### Prerequisites
-APLHA-3D requires Python 3.6 or higher. If you don’t have Python installed, download and install it from the [official Python website](https://www.python.org/).
-
-### Step-by-step Setup
-1. **Clone the repository**  
-   First, clone the repository to your local machine using Git:
+1. Initialize a new Python project and set up a virtual environment.
+2. Install dependencies:
    ```bash
-   git clone https://github.com/ShivamKR12/APLHA-3d.git
+   pip install ursina
+   ```
+3. Create a `main.py` file to serve as the entry point.
 
-2. **Navigate into the project folder**
-   Change into the project directory:
+## Game Framework
+
+1. Set up the game window using Ursina.
+2. Create a basic player controller with first-person movement.
+
+## Voxel System
+
+1. Implement a voxel class to represent blocks in the world.
+2. Define basic voxel properties, such as size, color, and texture.
+
+## Terrain Generation
+
+1. Use procedural generation to create a flat or hilly terrain.
+2. Optional: Integrate noise functions (e.g., Perlin or Simplex noise) for more realistic terrain.
+
+## Block Interaction
+
+1. Add functionality to place and remove blocks using the mouse.
+2. Highlight the targeted block for better interaction feedback.
+
+## Physics and Collision
+
+1. Integrate basic collision detection to prevent the player from walking through blocks or falling out of the terrain.
+2. Ensure smooth movement across the terrain.
+
+## Lighting and Shading
+
+1. Add ambient lighting and shadows for a more immersive experience.
+2. Optional: Implement a day-night cycle.
+
+## Game Optimization
+
+1. Implement greedy meshing for voxel optimization to reduce the number of drawn faces.
+2. Integrate chunk-based rendering for performance improvements in larger worlds.
+
+## Save and Load System
+
+1. Allow saving the current state of the world (e.g., blocks placed/removed) to a file.
+2. Implement a loading system to restore the saved world.
+
+## Enhancements (Optional)
+
+1. Add textures to blocks for better visual quality.
+2. Introduce additional block types (e.g., dirt, stone, water).
+3. Add player tools or inventory for block management.
+
+## Block Interaction Details
+
+### Placing and Removing Blocks
+
+- **Placing Blocks**: To place a block, hover over an existing block and press the left mouse button. A new block will be placed adjacent to the existing block in the direction you are facing.
+- **Removing Blocks**: To remove a block, hover over the block you want to remove and press the right mouse button. The block will be removed from the world.
+
+### Code Example
+
+Here is an example of how block interaction is implemented in the `main.py` file:
+
+```python
+from ursina import Ursina, Entity, color, mouse
+from ursina.prefabs.first_person_controller import FirstPersonController
+
+class Voxel(Entity):
+    def __init__(self, position=(0,0,0)):
+        super().__init__(
+            model='cube',
+            color=color.white,
+            texture='white_cube',
+            position=position
+        )
+
+    def input(self, key):
+        if self.hovered:
+            if key == 'left mouse down':
+                Voxel(position=self.position + mouse.normal)
+            if key == 'right mouse down':
+                destroy(self)
+
+app = Ursina()
+
+for z in range(8):
+    for x in range(8):
+        Voxel(position=(x,0,z))
+
+player = FirstPersonController()
+app.run()
+```
+
+This code sets up a basic voxel world where you can place and remove blocks using the mouse.
+
+## Running the Game
+
+To run the game, execute the `main.py` file:
+
+```bash
+python main.py
+```
+
+## Game Features
+
+- **Player Movement**: Move around the world using the WASD keys and mouse for looking around.
+- **Block Placement and Removal**: Place and remove blocks using the left and right mouse buttons.
+- **Procedurally Generated Terrain**: Explore a flat or hilly terrain generated procedurally.
+
+## Testing Structure and Test Cases
+
+### Testing Structure
+
+The repository includes a dedicated testing structure for unit and integration tests. The tests are organized into different categories to ensure comprehensive coverage of all critical game features and components.
+
+### Test Cases
+
+1. **Unit Tests**
+   - Test individual components like voxels, player controls, and terrain generation.
+   - Verify that all parameters produce the expected results, such as block placement, removal, and chunk handling.
+   - Ensure that error handling works as intended for invalid inputs.
+
+2. **Integration Tests**
+   - Check the interaction between components like player actions, crafting systems, and entity behavior.
+   - Test game mechanics, such as crafting recipes, block durability, and resource collection.
+   - Ensure transitions between game states, such as loading new chunks or saving progress, function seamlessly.
+
+3. **Performance Tests**
+   - Assess chunk loading and rendering performance in different scenarios, such as dense terrain or high-speed movement.
+   - Test the impact of dynamic lighting, weather effects, and particle systems on frame rates.
+   - Identify potential bottlenecks in terrain generation or physics simulations.
+
+4. **Gameplay Tests**
+   - Playtest the game to ensure smooth controls, proper collision detection, and expected gameplay behavior.
+   - Verify that AI entities respond appropriately to player actions and environmental changes.
+   - Ensure all environmental interactions, such as fire spreading or water flowing, behave realistically.
+
+5. **Stress Tests**
+   - Simulate edge cases, such as extreme player movement speeds, large-scale world exploration, or high-density block placement.
+   - Test multiplayer performance by connecting multiple players and observing synchronization and latency.
+
+6. **Bug Tracking**
+   - Document any bugs or inconsistencies discovered during testing.
+   - Prioritize fixes based on their impact on gameplay and stability.
+   - Retest resolved issues to ensure they are fully addressed.
+
+7. **Final Review**
+   - Perform a comprehensive review of the game to confirm all features are functional and optimized.
+   - Ensure the game meets performance benchmarks and runs smoothly on intended platforms.
+
+## Running the Tests
+
+To run the tests, execute the following command:
+
+```bash
+python -m unittest discover tests
+```
+
+This command will discover and run all the test cases in the `tests` directory.
+
+## Importance of Testing
+
+Testing is a crucial part of the development process to ensure that all components of the game function correctly and meet performance expectations. By thoroughly testing the game, we can identify and fix issues early, leading to a more stable and enjoyable gaming experience.
+
+## VNC Setup
+
+To set up a VNC server in a separate directory outside the main game directory, follow these steps:
+
+1. **Create a new directory for VNC setup:**
+
    ```bash
-   cd APLHA-3d
+   mkdir -p ~/vnc_setup
+   cd ~/vnc_setup
+   ```
 
-3. **Install dependencies**
-   APLHA-3D uses several Python libraries, including Ursina for rendering and input handling.
-   Install the required dependencies using pip:
+2. **Install VNC server:**
+
    ```bash
-   pip install -r requirements.txt
+   sudo apt update
+   sudo apt install -y tightvncserver
+   ```
 
-4. **Run the game**
-   Once all dependencies are installed, you can launch the game by running:
+3. **Configure VNC server:**
+
+   - Start the VNC server to set up a password:
+
+     ```bash
+     vncserver
+     ```
+
+   - Kill the VNC server instance:
+
+     ```bash
+     vncserver -kill :1
+     ```
+
+   - Create a VNC configuration file:
+
+     ```bash
+     nano ~/.vnc/xstartup
+     ```
+
+     Add the following lines to the file:
+
+     ```bash
+     #!/bin/bash
+     xrdb $HOME/.Xresources
+     startxfce4 &
+     ```
+
+   - Make the file executable:
+
+     ```bash
+     chmod +x ~/.vnc/xstartup
+     ```
+
+4. **Start the VNC server:**
+
    ```bash
-   python main.py
+   vncserver :1
+   ```
 
- 5. **Enjoy the Game!**
-    Use the keyboard and mouse to explore the voxel world, manipulate blocks, and interact with the environment.
+5. **Access the VNC server:**
 
-## Controls
+   - Use a VNC viewer to connect to the VNC server. The address will be `your_server_ip:1`.
 
-**W, A, S, D: Move the player around the world.**
+6. **Stop the VNC server:**
 
-**Spacebar: Jump.**
+   ```bash
+   vncserver -kill :1
+   ```
 
-**Right Mouse Button: Look around.**
-
-**Left Mouse Button: Place blocks.**
-
-**Right Mouse Button: Remove blocks.**
-
-**Shift: Run.**
-
-### Contributing
-
-Contributions are welcome! Whether you're reporting bugs, suggesting improvements, or adding new features, we appreciate your help. To contribute to the project:
-
-## Fork the repository.
-
-**Create a new branch (git checkout -b feature-branch).**
-
-Make your changes and test them thoroughly.
-
-**Commit your changes (git commit -am 'Add new feature').**
-
-**Push to your branch (git push origin feature-branch).**
-
-**Submit a pull request to the main repository.**
-
-Please ensure your code adheres to the project's style guide and that it’s well-documented. Bug fixes and new features are highly appreciated!
-
-## License
-This project is licensed under the MIT License. See the LICENSE file for details.
-
-## Acknowledgements
-**APLHA-3D** uses various open-source libraries and tools:
-
-**Ursina** for handling 3D rendering and input.
-
-**NumPy** for efficient array and matrix operations.
-
-**Perlin-noise** for procedural terrain generation.
-
-Special thanks to the open-source community for their contributions!
-
-## Future Enhancements
-APLHA-3D is a work in progress. The following features are planned for future releases:
-
-**Multiplayer Support:** Enable multiple players to explore and modify the world together.
-
-**Enhanced Physics Engine:** Implement more realistic collision detection and object interaction.
-
-**Advanced AI:** Add NPCs with intelligent behaviors to populate the world.
-
-**Better Optimization:** Improve performance for larger worlds and more complex environments.
-
-## Support
-If you encounter any issues or have questions, feel free to open an issue in the repository. We’ll do our best to assist you!
-
-Thank you for exploring APLHA-3D. Enjoy building, exploring, and experimenting with this 3D voxel world!
+By following these steps, you will have a VNC server set up in a separate directory outside the main game directory, running independently without causing any major connections or errors in the main files.
